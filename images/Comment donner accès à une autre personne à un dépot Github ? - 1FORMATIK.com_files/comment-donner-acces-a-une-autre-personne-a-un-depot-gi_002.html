@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=0">
+<meta name="referrer" content="always">
+<title>Player Pepsia (en)</title>
+<style>
+/* Global */
+*{margin:0;padding:0;}
+html,body{width:100%;height:100%;min-height:100%;font-family:Arial;}
+body{overflow:hidden;}
+
+/*** Structure ***/
+#player{width:100%;height:100%;min-height:100%;position:relative;}
+#player_header{position:absolute;top:0;left:0;right:0;width:100%;height:40px;line-height:40px;font-size:20px;z-index:100;}
+#player_screen{position:absolute;top:40px;bottom:20px;left:0;right:0;z-index:10;background:#000;font-size:12px;color:#000;}
+#player_footer{position:absolute;bottom:0;left:0;right:0;width:100%;height:20px;line-height:20px;font-size:12px;color:#000;z-index:10;}
+
+/*** Screens ***/
+
+/* */
+#player_screen_video{z-index:100;}
+
+/* Loading */
+#player_screen_loading{position:absolute;top:0;left:0;right:0;bottom:0;background:#ccc;z-index:200;text-align:center;}
+#player_screen_loading_img{max-width:100%;max-height:100%;width:auto;height:100%;}
+
+/* Overlay */
+#player_screen_overlay{position:absolute;top:0;left:0;right:0;bottom:0;z-index:300;cursor:pointer;}
+#player_screen_overlay_link{width:100%;height:100%;display:block;}
+
+/* Big Controls */
+#player_screen_controls{position:absolute;margin:auto;top:0;left:0;right:0;bottom:0;width:120px;height:120px;z-index:400;}
+#player_screen_controls a{font-size: 70px;color: #1876cc;}
+#player_screen_controls a:hover{color: #2483d5;}
+/*
+#player_screen_controls a {
+  font-size: 70px;
+  line-height: 70px;
+  height: 100%;
+  width: 100%;
+  color: #1876cc;
+  color: #fff;
+  background: rgba(255, 255, 255,0.25);
+  display: inline-block;
+  border-radius: 50%;
+  text-align: center;
+}
+*/
+/* Controlbar */
+#player_screen_controlbar{position:absolute;bottom:0;left:0;right:0;height:40px;line-height:40px;font-size:20px;z-index:500;
+  background-color: rgba(0,0,0,0.3) !important;
+  color: #ffffff;
+  /*transition: transform .1s ease 0s;*/
+}
+#player_screen_controlbar a{
+text-decoration:none;color:#333;vertical-align:middle;
+color: #1876cc;
+}
+#player_screen_controlbar a:hover{
+color: #fff;
+}
+/* Cookies */
+#player_screen_cookies{position:absolute;top:0;left:0;right:0;bottom:0;z-index:600;text-align:center;}
+#player_screen_cookies div{}
+#player_screen_cookies label{display:block;cursor:pointer;margin-top:10px;}
+#player_screen_cookies label span{font-weight:bold;}
+#player_screen_cookies p{font-size:12px;}
+/* Privacy */
+#player_screen_privacy{position:absolute;top:0;left:0;right:0;bottom:0;z-index:700;text-align:center;}
+#player_screen_privacy div{}
+
+
+
+
+/*** Utils ***/
+/*
+#player_topcontrols_volume .hide{visibility:hidden !important;}
+#player_screen_controlbar .hide{visibility:hidden !important;}
+*/
+.hide{display:none !important;}
+.mask{visibility:hidden !important;}
+/*.hide{visibility:hidden;}*/
+
+/*** Default Style ***/
+
+/* Logo */
+#player_logo{position:absolute;top:0;left:5px;width:32px;text-align:center;}
+#player_logo img{max-width:100%;height:auto;vertical-align:middle;}
+
+/* Title */
+#player_title{position:absolute;top:0;left:42px;right:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+#player_header{background:#fff;}
+#player_footer{background:#fff;}
+/* Top Controls */
+/*#player_topcontrols{position:absolute;top:0;right:5px;width:75px;text-align:right;height:100%;}*/
+.player_topcontrols a{text-decoration:none;color:#333;vertical-align:middle;}
+#player_topcontrols_next{position:absolute;top:0;right:55px;height:100%;}
+#player_topcontrols_sound{position:absolute;top:0;right:30px;height:100%;}
+#player_topcontrols_fullscreen{position:absolute;top:0;right:5px;height:100%;}
+/* Top Controls volume Bar */
+#player_topcontrols_volume{
+  display:block;
+  vertical-align:middle;
+	position:relative;
+	cursor:pointer;
+	width:10px;
+	height:75px;
+  border:1px solid #fff;
+  margin: 0 5px 0 5px;
+}
+#player_topcontrols_volumeBar{
+	display:block;
+	position:absolute;
+	top:0;
+	left:0;
+  z-index:10;
+  height:0;
+  width:100%;
+	background-color:#1876cc;
+	
+}
+
+/** Screen **/
+#player_screen{background:#000;}
+/** UI **/
+
+/** ControlBar **/
+#player_screen_controlbar a{text-decoration:none;vertical-align:top;color: #fff;}
+#player_screen_controlbar a:hover{color: #1876cc;}
+/*#player_screen_controlbar.hide{display:block;visibility:hidden;}*/
+
+
+/* ProgressBar */
+#player_controlbar_progress {
+width:100%;
+height:6px;
+position:relative;
+cursor:pointer;
+background: #444; /* fallback */
+background: rgba(68, 68, 68,0.25);/* transparent background */
+box-shadow:0 2px 3px #333 inset;
+}
+#player_controlbar_progress span {height:100%;position:absolute;top:0;left:0;display:block;border-radius:10px;}/* Structure */
+#player_controlbar_progress span {border-radius:10px;}/* Design */
+#player_controlbar_timeBar{z-index:10;width:0;}/* Structure */
+#player_controlbar_timeBar{background: #3FB7FC;background: linear-gradient(to top,#A0DCFF 50%,#3FB7FC 50%,#16A9FF 100%);box-shadow:0 0 1px #fff;}/* Design */
+#player_controlbar_bufferBar{z-index:5;width:0;} /* Structure */
+#player_controlbar_bufferBar{background: #777;background: linear-gradient(to top,#999,#666);box-shadow:2px 0 5px #333;}/* Design */
+
+/* Btn Play */
+#player_controlbar_play{position:absolute;top:6px;left:5px;}
+/* Btn Pause */
+#player_controlbar_pause{position:absolute;top:6px;left:5px;}
+/* Btn Volume */
+#player_controlbar_sound{/*position:absolute;top:6px;left:30px;*/z-index:2;
+position:absolute;top:6px;right:30px;width:20px;}
+/* Btn Volume Bar */
+#player_controlbar_volume{
+  display:block;
+  top:-115px;
+  left:5px;
+  
+	position:relative;
+	cursor:pointer;
+	width:10px;
+	height:80px;
+  border:1px solid #fff;
+  z-index:20;
+}
+#player_controlbar_volumeBar{
+	display:block;
+	height:0;
+  width:100%;
+	position:absolute;
+	bottom:0;
+	left:0;
+	background-color:#1876cc;
+	z-index:19;
+}
+
+/* Btn Next */
+#player_controlbar_next{position:absolute;top:6px;right:5px;}
+
+/* Btn Fullscreen */
+#player_controlbar_fullscreen{position:absolute;top:6px;right:5px;}
+
+/* a add dans template design */
+#player_controlbar_sound{display:none;}
+#player_controlbar_fullscreen{display:none;}
+#player_topcontrols_next{display:none;}
+
+/* Time Info */
+#player_controlbar_time{position:absolute;top:6px;right:5px;width:120px;text-align:center;}
+
+/* Next Title */
+#player_controlbar_nextTitle{position:absolute;top:6px;left:30px;right:130px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+#player_controlbar_nextTitle a{color:#1876cc;}
+
+/* Big Play & Big Pause */
+#player_big_play a,#player_big_pause a{font-size: 200px;color: #1876cc;}
+#player_big_play a:hover,#player_big_pause a a:hover{color: #2483d5;}
+/* Big Buttons */
+#player_big_play i.glyphicon-play{top: 22px;left: 5px;}/* Repositionnement icon */
+#player_big_pause i.glyphicon-pause{top: 22px;left: 3px;}/* Repositionnement icon */
+
+/* Global Modal*/
+.modal{background:#fff;padding:10px;border-radius:5px;}/* Design */
+.modal_title{font-size:16px;font-weight:bold;text-align:center;}/* Design */
+.modal_close{color:#000;text-decoration:none;}/* Design */
+.modal_close:hover{color:#333;text-decoration:none;}/* Design */
+/* Cookie Modal */
+#player_screen_cookies_container{max-width:300px;width:90%;max-height:90%;height:240px;position:absolute;margin:auto;top:0;left:0;right:0;bottom:0;text-align:left;}
+#player_screen_cookies_container{background:#fff;padding:10px;border-radius:5px;}
+#player_screen_cookies_close{float:right;}
+#player_screen_cookies_title{}
+
+/* Privacy Modal */
+#player_screen_privacy_container{max-width:90%;width:800px;max-height:90%;height:600px;position:absolute;margin:auto;top:0;left:0;right:0;bottom:0;text-align:left;}
+#player_screen_privacy_close{float:right;}
+#player_screen_privacy_title{}
+
+/* Cookie Link */
+#player_cookies_btn{float:left;padding-left:5px;text-decoration:none;color:#333;}
+/* Privacy Link */
+#player_privacy_btn{float:left;padding-left:5px;text-decoration:none;color:#333;}
+/* Copyright Link */
+#player_copyright_btn{float:right;padding-right:5px;text-decoration:none;color:#333;}
+#player_copyright_btn span{color:#2176ff;}
+
+
+/* Controls | No Controls Switch header controls & controlBar */
+/** switch title **/
+#player.controls #player_title{right:5px;}
+#player.nocontrols #player_title{right:90px;}
+/** switch controltop **/
+/*
+#player.controls #player_topcontrols{display:none;}
+#player.nocontrols #player_topcontrols{display:block;}
+*/
+#player.controls #player_title{right:60px;}
+/* switch / btn next */
+#player.controls #player_topcontrols_next{display:none;}
+#player.nocontrols #player_topcontrols_next{display:block;}
+/* switch / btn fullscreen : always visible */
+/*
+#player.controls #player_topcontrols_fullscreen{display:none;}
+#player.nocontrols #player_topcontrols_fullscreen{display:block;}
+*/
+/* switch / btn sound */
+/*
+#player.controls #player_topcontrols_sound{display:none;}
+#player.nocontrols #player_topcontrols_sound{display:block;}
+*/
+/*
+#player.controls #player_topcontrols_sound{visibility:hidden;}
+#player.nocontrols #player_topcontrols_sound{visibility:visible;}
+*/
+/** switch controlbar **/
+/*
+#player.controls #player_screen_controlbar{display:block;}
+#player.nocontrols #player_screen_controlbar{display:none;}
+*/
+#player.controls #player_screen_controlbar{visibility:visible;}
+#player.nocontrols #player_screen_controlbar{visibility:hidden;}
+
+
+
+/* Logo | No Logo Switch */
+#player.logo #player_title{left:42px;}
+#player.nologo #player_title{left:5px;}
+#player.logo #player_logo{display:block;}
+#player.nologo #player_logo{display:none;}
+
+/* Pour ... */
+@media (max-width: 480px){
+  /* Réduit le header et ces éléments */
+  #player_header{height:20px;line-height:20px;font-size:14px;}
+  #player_screen{top:20px;}
+  #player_logo{width:16px;}
+  #player_title{right:75px;}
+  #player.nocontrols #player_title{right:62px;}
+  #player.logo #player_title{left:26px;}
+  /*#player_topcontrols{height:50px;}*/
+  #player_topcontrols_sound{position:absolute;top:0;right:24px;height:100%;}
+  #player_topcontrols_volume{margin: 0;}
+  #player_topcontrols_next{position:absolute;top:0;right:43px;height:100%;}
+  /*#player_topcontrols_fullscreen{position:absolute;top:0;right:5px;height:100%;}*/
+  #player_controlbar_time{display:none;}
+  #player_controlbar_nextTitle{right:5px;font-size:14px;}
+  #player_controlbar_nextTitle span{display:none}
+}
+
+/* Glyphicons */
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/fonts/glyphicons-halflings-regular.eot');
+  src: url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/fonts/glyphicons-halflings-regular.woff') format('woff'), url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}
+.glyphicon {
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  font-family: 'Glyphicons Halflings';
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.glyphicon-off:before {
+  content: "\e017";
+}
+.glyphicon-refresh:before {
+  content: "\e031";
+}
+.glyphicon-volume-off:before {
+  content: "\e036";
+}
+.glyphicon-volume-up:before {
+  content: "\e038";
+}
+.glyphicon-fullscreen:before {
+  content: "\e140";
+}
+.glyphicon-cog:before {
+  content: "\e019";
+}
+.glyphicon-play:before {
+  content: "\e072";
+}
+.glyphicon-play-circle:before {
+  content: "\e029";
+}
+.glyphicon-pause:before {
+  content: "\e073";
+}
+.glyphicon-ok:before {
+    content: "\e013";
+}
+.glyphicon-remove:before {
+  content: "\e014";
+}
+.glyphicon-user:before {
+  content: "\e008";
+}
+.glyphicon-signal:before {
+    content: "\e018";
+}
+
+/*
+FontAwesome
+link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+*/</style>
+
+<!-- GG Analytics -->
+<script src="analytics.js"></script><script type="text/javascript">
+window.ga=function(){(window.ga.q=window.ga.q||[]).push(arguments)};
+window.ga.l=1*new Date();
+var s=document.createElement('script');
+var m=document.getElementsByTagName('script')[0];
+//s.async=1;//no async
+s.src='https://www.google-analytics.com/analytics.js';
+m.parentNode.insertBefore(s,m);  
+ga('create', 'UA-112916055-4', {'sampleRate': 5});//limitation a 5% du traf
+//ga('create', 'UA-112916055-3', 'auto');
+if(location.hostname!='player.pepsia.com'){
+  try{
+    ga('set', 'referrer', top.location.href);
+  } catch(e){//
+    var n = window.location.ancestorOrigins;
+    if(n && n.length > 0 && n[n.length - 1]){
+      ga('set', 'referrer', n[n.length - 1]);
+    }
+  }
+}
+ga('send', 'pageview');
+</script>
+<style type="text/css">#adways-tracer-resize-div:hover{cursor:ns-resize;}</style><script type="text/javascript" src="comment-donner-acces-a-une-autre-personne-a-un-depot-github__002/loader.js"></script></head>
+<body>
+<div id="player" data-id="0" class="autoplay controls mute logo loop">
+  <div id="player_header">
+    <div id="player_logo">
+      <img id="player_logo_img" class="player_controls_logo" src="comment-donner-acces-a-une-autre-personne-a-un-depot-github__002/favicon-16x16.png">
+    </div>
+    
+    <div id="player_title" class="player_controls_title" title="Technological innovations that will soon be available">Technological innovations that will soon be available</div>
+    
+    <div id="player_topcontrols_next" class="player_topcontrols"><a href="#" class="player_controls_next" title="Next"><i class="glyphicon glyphicon-refresh"></i></a></div>
+    
+    <div id="player_topcontrols_sound" class="player_topcontrols player_controls_sound">
+      <!-- Mute Btn-->
+      <a href="#" id="player_topcontrols_sound_off" class="player_controls_sound_off hide" title="Sound Off"><i class="glyphicon glyphicon-volume-up"></i></a>
+      <!-- Unmute Btn -->
+      <a href="#" id="player_topcontrols_sound_on" class="player_controls_sound_on" title="Sound On"><i class="glyphicon glyphicon-volume-off"></i></a>
+      <div id="player_topcontrols_volume" class="hide player_controls_volume" title="Set Volume">
+			  <span id="player_topcontrols_volumeBar" class="player_controls_volumeBar" style="height: 0%;"></span>
+		  </div>  
+    </div>
+    <div id="player_topcontrols_fullscreen" class="player_topcontrols">
+      <a href="#" id="player_topcontrols_fullscreen_on" class="player_controls_fullscreen" title="Full Screen"><i class="glyphicon glyphicon-fullscreen"></i></a>
+      <a href="#" id="player_topcontrols_fullscreen_off" class="player_controls_fullscreen_close hide" title="Return to Normal Screen"><i class="glyphicon glyphicon-off"></i></a>
+    </div>
+  </div>
+  <div id="player_screen">
+    <iframe id="player_screen_video" allowfullscreen="true" allow="autoplay" title="Dailymotion video player" src="comment-donner-acces-a-une-autre-personne-a-un-depot-github__002/embed.html" frameborder="0" width="100%" height="100%"></iframe>
+    <div id="player_screen_loading" class=" hide">
+      <img id="player_screen_loading_img" src="comment-donner-acces-a-une-autre-personne-a-un-depot-github__002/x7apfwx.jpeg">
+    </div>
+    <div id="player_screen_overlay" class=""><a id="player_screen_overlay_link" href="#" target="_blank"></a></div>
+    <div id="player_screen_controlbar" class=" mask">
+      <!-- ProgressBar -->
+      <div id="player_controlbar_progress" class="player_controls_progress">
+				<span id="player_controlbar_bufferBar" class="player_controls_bufferBar" style="width: 41.5301%;"></span>
+				<span id="player_controlbar_timeBar" class="player_controls_timeBar" style="width: 41.4415%;"></span>
+			</div>
+
+      <!-- Play Btn -->
+      <div id="player_controlbar_play">
+        <a href="#" class="player_controls_play"><i class="glyphicon glyphicon-play"></i></a>
+      </div>
+      
+      <!-- Pause Btn -->
+      <div id="player_controlbar_pause">
+        <a href="#" class="player_controls_pause hide"><i class="glyphicon glyphicon-pause"></i></a>
+      </div>
+      
+      <!-- Next Btn
+      <div id="player_controlbar_next">
+        <a href="#" class="player_controls_next" title="Next"><i class="glyphicon glyphicon-refresh"></i></a>
+      </div>
+       -->
+      <!-- Sound Btn -->
+      <div id="player_controlbar_sound" class="player_controls_sound">
+        <!-- Mute Btn-->
+        <a href="#" id="player_controlbar_sound_off" class="player_controls_sound_off hide" title="Sound Off"><i class="glyphicon glyphicon-volume-off"></i></a>
+        <!-- Unmute Btn -->
+        <a href="#" id="player_controlbar_sound_on" class="player_controls_sound_on" title="Sound On"><i class="glyphicon glyphicon-volume-up"></i></a>
+        <!-- Controlbar Volume -->
+        <div id="player_controlbar_volume" class="hide player_controls_volume" title="Set Volume">
+  			  <span id="player_controlbar_volumeBar" class="player_controls_volumeBar" style="height: 0%;"></span>
+  		  </div>
+      </div>
+      
+      <div id="player_controlbar_fullscreen">
+        <!-- Fullscreen Btn -->
+        <a href="#" id="player_controlbar_fullscreen_on" class="player_controls_fullscreen" title="Full Screen"><i class="glyphicon glyphicon-fullscreen"></i></a>
+        <!-- NoFullscreen Btn -->
+        <a href="#" id="player_controlbar_fullscreen_off" class="player_controls_fullscreen_close hide" title="Return to Normal Screen"><i class="glyphicon glyphicon-off"></i></a>
+      </div>
+      <!-- Time -->
+      <div id="player_controlbar_time">
+				<span class="player_controls_currentTime">00:36</span> / 
+				<span class="player_controls_durationTime">01:27</span> 
+			</div>
+      
+      <!-- NextTitle -->
+      <div id="player_controlbar_nextTitle">
+        <span>Next Video : </span>
+        <a href="#" class="player_controls_next player_controls_nextTitle" title="The best high-end smartphones">The best high-end smartphones</a>
+      </div>
+    </div>
+    <div id="player_screen_controls" class="">
+      <!-- Big Play Btn -->
+      <a href="#" id="player_big_play" class="player_controls_play"><i class="glyphicon glyphicon-play"></i></a>
+      <!-- Big Pause Btn -->
+      <a href="#" id="player_big_pause" class="player_controls_pause hide"><i class="glyphicon glyphicon-pause"></i></a>
+    </div>
+    <div id="player_screen_cookies" class="hide">
+      <div id="player_screen_cookies_container" class="modal">
+        <a href="#" id="player_screen_cookies_close" class="player_screen_cookies_close modal_close"><i class="glyphicon glyphicon-remove"></i></a>
+        <h2 id="player_screen_cookies_title" class="modal_title">Manage my cookies</h2>
+        <label>
+          <input name="ads" id="player_screen_cookies_ads" checked="checked" type="checkbox"> <span>AdNetWork Cookies</span>
+          <p>Les cookies publicitaire permettent aux annonceurs de vous présenter des publicités ciblées. <br><u>Refuser les cookies publicitaire ne supprime pas les publicités, mais les rends plus énervante.</u></p>
+        </label>
+        <label>
+          <input name="xp" id="player_screen_cookies_xp" checked="checked" type="checkbox"> <span>Content Cookies</span>
+          <p>Les cookies de contenu nous permettent de vous sélectionner des vidéos selon votre historique de lecture.</p>
+        </label>
+        <label>
+          <input name="audience" id="player_screen_cookies_audience" checked="checked" type="checkbox"> <span>Stats Cookies</span>
+          <p>Les cookies de statistiques nous permettent d'améliorer nos services selon les tendances du moment.</p>
+        </label>
+      </div>
+    </div>
+    <div id="player_screen_privacy" class="hide">
+      <div id="player_screen_privacy_container" class="modal">
+        <a href="#" id="player_screen_privacy_close" class="player_screen_privacy_close modal_close"><i class="glyphicon glyphicon-remove"></i></a>
+        <h2 id="player_screen_privacy_title" class="modal_title">Privacy</h2>
+        <!-- IFRAME CGU PEPSIA -->
+      </div>
+    </div>
+  </div>
+  <div id="player_footer">
+    <a href="https://pepsia.com/en/politique-de-confidentialite/" target="_blank" id="player_privacy_btn" class="player_controls_privacy" title="Privacy &amp; Cookie"><i class="glyphicon glyphicon-user"></i> Cookie &amp; Privacy</a>
+    <!--
+    <a href="#" id="player_cookies_btn" class="player_controls_cookies" title="Manage my cookies"></i> Cookie</a>
+    <a href="#" id="player_privacy_btn" class="player_controls_privacy" title="Privacy"><i class="glyphicon glyphicon-user"></i> Privacy</a>
+    -->
+    <a href="http://www.pepsia.com/" id="player_copyright_btn" target="_blank">Content provided by <span>Pepsia</span></a>
+  </div>
+<div style="width: 0px ! important; height: 0px ! important; position: absolute; overflow: visible ! important; top: 40px; left: 0px; z-index: 13; display: block;" class="adw-hotspot-layer"></div></div>
+
+<script type="text/javascript">
+/*
+window.onerror = function(message, source, lineno, colno, error) {
+  if (error) message = error.stack;
+  if(ga){
+    ga('send', 'event', 'JsError', message, navigator.userAgent);
+  }
+  return true;
+}
+*/
+function Player(i){function n(e){var o=e;this.addEventListener=function(e,t){o.addEventListener?o.addEventListener(e,t,!1):o.attachEvent&&o.attachEvent("on"+e,t)},this.removeEventListener=function(e,t){o.removeEventListener?o.removeEventListener(e,t,!1):o.detachEvent&&o.detachEvent("on"+e,t)},this.dispatchEvent=function(e,t){if(t={bubbles:!!(t=t||{bubbles:!1,cancelable:!1,detail:void 0}).bubbles,cancelable:!!t.cancelable,detail:t.detail?t.detail:null},"function"==typeof CustomEvent)var n=new CustomEvent(e,t);else(n=document.createEvent("CustomEvent")).initCustomEvent(e,t.bubbles,t.cancelable,t.detail);o.dispatchEvent(n)},this.show=function(){this.removeClass("hide"),this.removeClass("mask")},this.hide=function(){this.addClass("hide")},this.mask=function(){this.addClass("mask")},this.hasClass=function(e){return new RegExp(" "+e+" ").test(" "+o.className+" ")},this.addClass=function(e){this.hasClass(e)||(o.className+=" "+e)},this.removeClass=function(e){var t=" "+o.className.replace(/[\t\r\n]/g," ")+" ";if(this.hasClass(e)){for(;0<=t.indexOf(" "+e+" ");)t=t.replace(" "+e+" "," ");o.className=t.replace(/^\s+|\s+$/g,"")}},this.HTML=function(e){o.innerHTML=e},this.setProperty=function(e,t){o[e]=t},this.getProperty=function(e){return o[e]}}function e(e){for(var o=[],t=0;t<e.length;t++)o.push(new n(e[t]));this.addEventListener=function(e,t){for(var n=0;n<o.length;n++)o[n].addEventListener(e,t)},this.removeEventListener=function(e,t){for(var n=0;n<o.length;n++)o[n].removeEventListener(e,t)},this.dispatchEvent=function(e,t){for(var n=0;n<o.length;n++)o[n].dispatchEvent(e,t)},this.show=function(){for(var e=0;e<o.length;e++)o[e].removeClass("hide"),o[e].removeClass("mask")},this.hide=function(){for(var e=0;e<o.length;e++)o[e].removeClass("mask"),o[e].addClass("hide")},this.mask=function(){for(var e=0;e<o.length;e++)o[e].removeClass("hide"),o[e].addClass("mask")},this.hasClass=function(e){return o[0].hasClass(e)},this.addClass=function(e){for(var t=0;t<o.length;t++)o[t].addClass(e)},this.removeClass=function(e){for(var t=0;t<o.length;t++)o[t].removeClass(e)},this.HTML=function(e){for(var t=0;t<o.length;t++)o[t].HTML(e)},this.setProperty=function(e,t){for(var n=0;n<o.length;n++)o[n].setProperty(e,t)},this.getProperty=function(e){return o[0].getProperty(e)}}var o=null,a=[],s=null,r={video:null,loading:null,overlay:null,controls:null,controlbar:null,cookies:null,privacy:null},l={logo:null,title:null,play:null,pause:null,next:null,nextTitle:null,sound_off:null,sound_on:null,fullscreen_on:null,fullscreen_off:null,sound:null,volume:null,volumeBar:null,progress:null,timebar:null,bufferBar:null,currentTime:null,durationTime:null,cookies:null,cookies_close:null,privacy:null,privacy_close:null},c=null,d=!1,u=!1,m=0,v=!1,f=!1,p=!1,h="normal",y="corner",g={};function t(){function t(){document.activeElement&&"IFRAME"===document.activeElement.tagName&&(c.focusRetriever.focus(),c.focusRetrieved=!0)}j("PLAYER CONFIG","info"),c.addEventListener("apiready",function(e){j("API INIT","info"),x("apiready"),p=!0,Y({action:"apiready"}),o.hasClass("mute"),c.muted=o.hasClass("mute"),S()}),A("apiready",function(e){j("NO API READY !","error"),Y({action:"error",message:"NO API READY !"})},15e3),c.addEventListener("error",function(e){j(c.error.code,"error"),"QUALITY_SWITCHER_ERROR"!=c.error.code&&Y({action:"error",message:c.error.code})}),c.addEventListener("pause",function(e){l.pause.hide(),l.play.show(),r.controls.show()}),c.addEventListener("ad_start",function(e){x("checkplay"),Y({action:"started"}),Y({action:"canpause",value:!1}),q("sda_start"),G("sda_start"),v=u=!0,m=0,r.overlay.hide(),r.controls.hide(),F(d?i.text.title.interstitial_ads:i.text.title.ads)}),c.addEventListener("ad_play",function(e){v=u=!0,r.loading.hide(),F(d?i.text.title.interstitial_ads:i.text.title.ads)}),c.addEventListener("ad_timeupdate",function(e){v=u=!0,isNaN(c.duration)||(m=c.duration)}),c.addEventListener("ad_pause",function(e){v&&!c.muted&&(c.setMuted(!0),k())}),c.addEventListener("ad_end",function(e){q("sda_end"),G("sda_end"),v=!1,d&&(d=!1,Y({action:"interstitial_end"}))}),c.addEventListener("video_start",function(e){f=!0,q("video_start"),G("video_start"),r.overlay.show(),F(d?i.text.title.interstitial_video.replace(/%d/g,d):"%T")}),c.addEventListener("play",function(e){Y({action:"play"}),A("checkplay",function(){j("NOPLAY","error")},1e4)}),c.addEventListener("playing",function(e){f||(f=!0,q("video_start"),G("video_start"),r.overlay.show()),x("checkplay"),l.play.hide(),l.pause.show(),r.loading.hide(),r.controls.hide(),Y({action:"started"}),Y({action:"canpause",value:!0})}),c.addEventListener("video_end",function(e){Y({action:"canpause",value:!1}),q("video_end"),G("video_end"),f=!"video_end"}),c.addEventListener("playback_ready",function(e){Y({action:"ready"}),d&&(Y({action:"interstitial_start"}),G("interstitial_start"))}),c.addEventListener("videochange",function(e){v=f=!1,q("video_load"),G("load")}),c.addEventListener("start",function(e){Y({action:"start"})}),c.addEventListener("end",function(e){Y({action:"end"}),b()}),c.addEventListener("volumechange",function(e){S()}),c.addEventListener("durationchange",function(e){l.durationTime.HTML(D(c.duration)),Y({action:"duration",value:c.duration})}),c.addEventListener("timeupdate",function(e){if(l.currentTime.HTML(D(c.currentTime)),l.timeBar.dispatchEvent("resizing",{detail:c.currentTime/c.duration*100+"%"}),l.bufferBar.dispatchEvent("resizing",{detail:c.bufferedTime/c.duration*100+"%"}),Y({action:"time",value:c.currentTime}),d){var t=d-parseInt(c.currentTime);F(i.text.title.interstitial_video.replace(/%d/g,t)),0==t&&(Y({action:"interstitial_end"}),G("interstitial_end"),d=!1,F("%T"))}}),N(window,"beforeunload",function(e){v&&q("sda_end",1),f&&q("video_end",1)}),N(window,"resize",function(e){Y({action:"resize"})}),window.focus(),window.addEventListener("blur",function(e){c.mouseover&&v&&(q("sda_clic"),A("checkplay",function(){c.paused&&b()},1e4))});var e=document.createElement("div");e.style.cssText="position:fixed; top:0; left:0; overflow:hidden;";var n=document.createElement("input");n.style.cssText="position:absolute; left:-300px;",n.type="text",n.id="focus_retriever",n.readonly=!0,e.appendChild(n),document.body.appendChild(e),c.focusRetriever=document.getElementById("focus_retriever"),c.focusRetrieved=!1,c.addEventListener("mouseover",function(e){c.mouseover=!0,t()}),c.addEventListener("mouseout",function(e){c.mouseover=!1,t()}),r.controls.show()}function _(){j("PLAYER INIT","info"),c=DM.player(document.getElementById("player_screen_video"),{width:"100%",height:"100%",params:{autoplay:!0,"autoplay-mute":!0,mute:!!o.hasClass("mute"),syndication:"273739",controls:!1,"sharing-enable":!1,"ui-logo":!1,"ui-start-screen-info":!1,"endscreen-enable":!1,utm_source:function(){for(var e="PepsiaConsent=",t=document.cookie.split(";"),n=0;n<t.length;n++){for(var o=t[n];" "==o.charAt(0);)o=o.substring(1,o.length);if(0==o.indexOf(e))return o.substring(e.length,o.length)}return"1"}()}}),t()}function E(e){e?(s=e,Y({action:"canpause",value:!1}),r.loadingImg.setProperty("src",atob("Ly93d3cuZGFpbHltb3Rpb24uY29tL3RodW1ibmFpbC8xMjgweDcyMC92aWRlby8=")+s.id_video),F(d?i.text.title.interstitial_load:i.text.title.load),u=!1,y="corner","normal"==h&&("mobile"!=i.client?400<=o.getProperty("offsetWidth")&&(y="main"):o.getProperty("offsetWidth")*o.getProperty("offsetHeigth")>=screen.availWidth*screen.availHeight*.2&&(y="main")),c.load(s.id_video,{autoplay:!!o.hasClass("autoplay"),"autoplay-mute":!!o.hasClass("autoplay"),mute:!!o.hasClass("mute"),ads_params:y})):j("NO VIDEO TO PLAY","error")}function b(){if(x("fakezapping"),0==a.length||!p)return s=i.fakevideos.shift(),i.fakevideos.push(s),r.loadingImg.setProperty("src",atob("Ly93d3cuZGFpbHltb3Rpb24uY29tL3RodW1ibmFpbC8xMjgweDcyMC92aWRlby8=")+s.id_video),F(i.text.title.load),i.fakevideos[1]&&M(i.fakevideos[1].titre),void A("fakezapping",function(){b()},1e3);E(a.shift()),a.length<=1&&(u=!0,z()),0<a.length&&M(a[0].titre)}function w(e){e.preventDefault(),v&&q("sda_end"),f&&q("video_end"),b(),Y({action:"userplay"})}function k(){p?c.play():j("Can't Play() -> PLAYER API IS NOT READY !","error")}function C(e){e.preventDefault(),p?(s?(k(),R(!0)):b(),Y({action:"userplay"})):j("Can't Play() -> PLAYER API IS NOT READY !","error")}function L(){p?c.pause():j("Can't Pause() -> PLAYER API IS NOT READY !","error")}function I(e){e.preventDefault(),p?(c.pause(),Y({action:"userpause"})):j("Can't Pause() -> PLAYER API IS NOT READY !","error")}function B(e){p?c.seek(e):j("Can't Seek() -> PLAYER API IS NOT READY !","error")}function P(e){p?(e?o.addClass("mute"):(o.removeClass("mute"),0==c.volume&&c.setVolume(1)),c.setMuted(e)):j("Can't Mute() -> PLAYER API IS NOT READY !","error")}function T(e){p?(c.setVolume(e),c.muted&&0<e&&P(!1)):j("Can't setVolume() -> PLAYER API IS NOT READY !","error")}function R(e){(e=!!e)?o.addClass("autoplay"):o.removeClass("autoplay"),Y({action:"autoplay",value:e})}function N(e,t,n){e.addEventListener?e.addEventListener(t,n,!1):e.attachEvent&&e.attachEvent("on"+t,n)}function x(e){"number"==typeof g[e]&&clearTimeout(g[e]),g[e]=null}function A(e,t,n){x(e),g[e]=setTimeout(t,n)}function D(e){var t=Math.floor(e/60)<10?"0"+Math.floor(e/60):Math.floor(e/60);return t+":"+(Math.floor(e-60*t)<10?"0"+Math.floor(e-60*t):Math.floor(e-60*t))}function F(e){e=s?e.replace(/%T/g,s.titre):e.replace(/%T/g,""),l.title.HTML(e),l.title.setProperty("title",e)}function M(e){l.nextTitle.HTML(e),l.nextTitle.setProperty("title",e)}function Y(e){i.api&&(e.id=i.id,e.provider="Pepsia",parent.postMessage(e,"*"))}function z(){j("Looking for "+i.max_videos+" videos","info"),Y({action:"getVideos",num:i.max_videos}),A("getVideos",function(){z()},2500)}function S(){c.muted||0==c.volume?(l.sound_off.hide(),l.sound_on.show()):(l.sound_on.hide(),l.sound_off.show()),c.muted?l.volumeBar.dispatchEvent("resizing",{detail:"0%"}):l.volumeBar.dispatchEvent("resizing",{detail:100*c.volume+"%"}),Y({action:"volume",value:c.volume}),Y({action:"mute",value:c.muted})}function O(e){W()?(l.fullscreen_on.hide(),l.fullscreen_off.show()):(l.fullscreen_off.hide(),l.fullscreen_on.show())}function H(){var e=document.getElementById("player");e.requestFullscreen?e.requestFullscreen():e.webkitRequestFullscreen?e.webkitRequestFullscreen():e.mozRequestFullScreen?e.mozRequestFullScreen():e.msRequestFullscreen&&e.msRequestFullscreen()}function V(){document.exitFullscreen?document.exitFullscreen():document.webkitExitFullscreen?document.webkitExitFullscreen():document.mozCancelFullScreen?document.mozCancelFullScreen():document.msExitFullscreen&&document.msExitFullscreen()}function W(){var e=document.getElementById("player"),t=document.fullscreenElement||document.webkitFullscreenElement||document.mozFullScreenElement||document.msFullscreenElement;return t&&t===e}function q(e,t){if(t=void 0!==t,s){var n=location.protocol+"//player.pepsia.com/V2/actions/"+e+".php?sid="+i.token;n+="&cid="+s.id,"sda_end"==e&&(n+="&duration="+m,n+="&mode="+y),"video_end"==e&&(n+="&mode="+y),t&&(n+="&force=1"),n+="&d="+(new Date).getTime().toString(16);var o=new Image;if(o.isload=!1,o.onload=function(){this.isload=!0,this.style.display="none"},o.onerror=function(){G("Error : Tracking "+e)},o.src=n,document.body.appendChild(o),t)for(var a=(new Date).getTime();!(o.isload||1e3<(new Date).getTime()-a););}}function G(e){if(ga){var t=s?s.id:"0000";ga("send","event",e,i.token,t)}}function j(e,t){if(t=void 0!==t?t:"log",!i.debug&&"error"!=t||console[t]("%c Pepsia.com Player #"+i.id+" Iframe","background: #ccc; color: #2176ff",e),"error"==t){G("Error : "+e);var n=location.protocol+"//player.pepsia.com/V2/actions/error.php?sid="+i.token;n+="&e="+encodeURIComponent(e),n+="&d="+(new Date).getTime().toString(16);var o=new Image;o.onload=function(){this.style.display="none"},o.src=n,document.body.appendChild(o)}}!function(){j("PREINIT","info");try{window.top.location.origin}catch(e){}i.api&&(j("API INSTALL","info"),N(window,"message",function(e){if(void 0!==e.data&&void 0!==e.data.provider&&"Pepsia"==e.data.provider&&void 0!==e.data.id&&e.data.id==i.id&&void 0!==e.data.action){var t=e.data;switch(t.action){case"track":t.value&&G(t.value);break;case"load":t.video&&E(t.video);break;case"play":k(),R(!0);break;case"pause":L();break;case"next":b();break;case"seek":B(t.time?t.time:0);break;case"setMute":P(n=!!t.bool);break;case"setVolume":T(t.level?t.level:0);break;case"setAutoplay":R(n=!!t.bool);break;case"setControls":!function(e){(e=!!e)?(o.removeClass("nocontrols"),o.addClass("controls")):(o.removeClass("controls"),o.addClass("nocontrols"));Y({action:"controls",value:e})}(n=!!t.bool);break;case"setLogo":!function(e){e?(o.removeClass("nologo"),o.addClass("logo")):(o.removeClass("logo"),o.addClass("nologo"));Y({action:"logo",value:e})}(n=!!t.bool);break;case"setFullScreen":var n=!!t.bool;setFullScreen(n);break;case"setVideos":t.videos&&(j(t.videos.length+(1<t.videos.length?" videos found !":" video found !"),"info"),0<t.videos.length&&(x("getVideos"),a=a.concat(t.videos),i.fakevideos=a,s||(r.loadingImg.setProperty("src",atob("Ly93d3cuZGFpbHltb3Rpb24uY29tL3RodW1ibmFpbC8xMjgweDcyMC92aWRlby8=")+a[0].id_video),F(i.text.title.load.replace("%T",a[0].titre)),a[1]&&M(a[1].titre))));break;case"interstitial_start":t.value=parseInt(t.value),t.value=t.value<15?15:t.value,t.value=60<t.value?60:t.value,d=t.value;break;case"mode":h=t.value}}})),i.video&&a.push(i.video),a.length<i.max_videos&&z(),function(){j("UI INIT","info"),o=new n(document.getElementById("player")),r.video=new n(document.getElementById("player_screen_video")),r.loading=new n(document.getElementById("player_screen_loading")),r.overlay=new n(document.getElementById("player_screen_overlay")),r.controls=new n(document.getElementById("player_screen_controls")),r.controlbar=new n(document.getElementById("player_screen_controlbar")),r.cookies=new n(document.getElementById("player_screen_cookies")),r.privacy=new n(document.getElementById("player_screen_privacy")),r.loadingImg=new n(document.getElementById("player_screen_loading_img")),l.logo=new e(document.getElementsByClassName("player_controls_logo")),l.title=new e(document.getElementsByClassName("player_controls_title")),l.play=new e(document.getElementsByClassName("player_controls_play")),l.pause=new e(document.getElementsByClassName("player_controls_pause")),l.next=new e(document.getElementsByClassName("player_controls_next")),l.nextTitle=new e(document.getElementsByClassName("player_controls_nextTitle")),l.sound_off=new e(document.getElementsByClassName("player_controls_sound_off")),l.sound_on=new e(document.getElementsByClassName("player_controls_sound_on")),l.fullscreen_on=new e(document.getElementsByClassName("player_controls_fullscreen")),l.fullscreen_off=new e(document.getElementsByClassName("player_controls_fullscreen_close")),l.sound=new e(document.getElementsByClassName("player_controls_sound")),l.volume=new e(document.getElementsByClassName("player_controls_volume")),l.volumeBar=new e(document.getElementsByClassName("player_controls_volumeBar")),l.progress=new e(document.getElementsByClassName("player_controls_progress")),l.timeBar=new e(document.getElementsByClassName("player_controls_timeBar")),l.bufferBar=new e(document.getElementsByClassName("player_controls_bufferBar")),l.currentTime=new e(document.getElementsByClassName("player_controls_currentTime")),l.durationTime=new e(document.getElementsByClassName("player_controls_durationTime")),l.cookies=new e(document.getElementsByClassName("player_controls_cookies")),l.cookies_close=new e(document.getElementsByClassName("player_screen_cookies_close")),l.cookies_audience=new n(document.getElementById("player_screen_cookies_audience")),l.cookies_xp=new n(document.getElementById("player_screen_cookies_xp")),l.cookies_ads=new n(document.getElementById("player_screen_cookies_ads")),l.privacy=new e(document.getElementsByClassName("player_controls_privacy")),l.privacy_close=new e(document.getElementsByClassName("player_screen_privacy_close")),l.overlay_link=new n(document.getElementById("player_screen_overlay_link")),l.play.addEventListener("click",C),l.pause.addEventListener("click",I),l.next.addEventListener("click",w),l.sound_off.addEventListener("click",function(e){e.preventDefault(),P(!0)}),l.sound_on.addEventListener("click",function(e){e.preventDefault(),P(!1)}),l.fullscreen_on.addEventListener("click",function(e){e.preventDefault(),H()}),l.fullscreen_off.addEventListener("click",function(e){e.preventDefault(),V()}),r.overlay.addEventListener("mouseover",function(e){x("controlbar"),r.controlbar.show()}),r.controlbar.addEventListener("mouseover",function(e){x("controlbar")}),r.overlay.addEventListener("mouseout",function(e){A("controlbar",function(){r.controlbar.mask()},2500)}),r.controlbar.addEventListener("mouseout",function(e){A("controlbar",function(){r.controlbar.mask()},2500)}),l.sound.addEventListener("mouseover",function(e){e.preventDefault(),l.volume.show()}),l.sound.addEventListener("mouseout",function(e){e.preventDefault(),l.volume.mask()}),l.volume.setProperty("updateVolume",function(e){var t,n=this.offsetWidth,o=this.offsetHeight,a=this.getBoundingClientRect();1<(t=0==n||o<n?(e.pageX-a.left)/n:(a.top<window.innerHeight/2?e.pageY-a.top:a.bottom-e.pageY)/o)&&(t=1),t<0&&(t=0),T(t)}),l.volume.setProperty("volumeDrag",!1),l.volume.addEventListener("mousedown",function(e){this.volumeDrag=!0,this.updateVolume(e)}),l.volume.addEventListener("mouseup",function(e){this.volumeDrag&&(this.volumeDrag=!1,this.updateVolume(e))}),l.volume.addEventListener("mousemove",function(e){this.volumeDrag&&this.updateVolume(e)}),l.volumeBar.setProperty("resize",function(e){j("VolumeBar Resize "+e,"info"),this.style.height=e}),l.volumeBar.addEventListener("resizing",function(e){this.resize(e.detail)}),l.progress.setProperty("updateSeek",function(e){var t=(e-this.getBoundingClientRect().left)/this.offsetWidth;1<t&&(t=1),t<0&&(t=0),B(c.duration*t)}),l.progress.addEventListener("click",function(e){j("CLICK PROGRESS","info"),this.updateSeek(e.pageX)}),l.timeBar.setProperty("resize",function(e){var t=this.parentNode.offsetWidth,n=this.parentNode.offsetHeight;0==t||n<t?this.style.width=e:this.style.height=e}),l.timeBar.addEventListener("resizing",function(e){this.resize(e.detail)}),l.bufferBar.setProperty("resize",function(e){var t=this.parentNode.offsetWidth,n=this.parentNode.offsetHeight;0==t||n<t?this.style.width=e:this.style.height=e}),l.bufferBar.addEventListener("resizing",function(e){this.resize(e.detail)}),l.cookies.addEventListener("click",function(e){e.preventDefault(),W()||H(),L(),r.privacy.hide(),r.cookies.show()}),l.cookies_close.addEventListener("click",function(e){e.preventDefault(),r.cookies.hide()}),l.cookies_audience.addEventListener("change",function(e){console.log(this.checked,this.value)}),l.cookies_xp.addEventListener("change",function(e){console.log(this.checked,this.value)}),l.cookies_ads.addEventListener("change",function(e){console.log(this.checked,this.value)}),l.privacy.addEventListener("click",function(e){}),l.privacy_close.addEventListener("click",function(e){e.preventDefault(),u?k():b(),r.privacy.hide()}),r.overlay.addEventListener("click",function(e){e.preventDefault(),r.controls.hasClass("hide")||C(e),W()?V():(q("video_clic"),H())}),N(document,"fullscreenchange",O),N(document,"webkitfullscreenchange",O),N(document,"mozfullscreenchange",O),N(document,"MSFullscreenChange",O),o.hasClass("mute")?(l.sound_off.hide(),l.sound_on.show()):(l.sound_off.show(),l.sound_on.hide());l.fullscreen_off.hide(),l.pause.hide(),r.overlay.show(),F(i.text.title.default),l.logo.setProperty("orisrc",l.logo.getProperty("src")),l.logo.addEventListener("error",function(){this.src=this.orisrc}),l.logo.setProperty("src",function(){var t;try{t=window.top.location.protocol+"//"+window.top.location.host+"/favicon.ico";for(var e=window.top.document.getElementsByTagName("link"),n=0;n<e.length;n++)("icon"==e[n].getAttribute("rel")||"shortcut icon"==e[n].getAttribute("rel")&&e[n].getAttribute("href"))&&(t=e[n].getAttribute("href"))}catch(e){t=""}return t}())}()}(),window.dmAsyncInit=function(){_()},setTimeout(function(){"function"!=typeof dmAsyncInit&&j("ERROR DM","error")},5e3)}
+/**/
+
+Player({
+  'api': true,
+  'id': "0",
+  'token': "00iO",
+  'video': null,
+  'cid': null,
+  'max_videos':5,
+  'fakevideos': [{"id":"0000","id_video":"x7okp69","titre":"French Company, LVMH Purchases Tiffany & Co."},{"id":"0000","id_video":"x7okp4c","titre":"You Can Hide the Replies to Your Tweets"},{"id":"0000","id_video":"x7okp0e","titre":"Some Brands Decided to Boycott Black Friday"},{"id":"0000","id_video":"x7okpb1","titre":"Fun Facts About Thanksgiving You Never Knew"},{"id":"0000","id_video":"x7okoxa","titre":"Healthy Holiday Food"}],
+  'text':{
+    'title':{// %T = Title remplacer (dispo partout), %d dispo dans les modes interstitial (secondes)
+      'default':"Zapping ...",
+      'load':"Zapping ... %T",
+      'ads':"After the Ads : %T",
+      'interstitial_load':"Click on Play to access Article",
+      'interstitial_ads':"Your Article is available after advertising",
+      'interstitial_video':"Your Article is available in %ds",
+    },
+  },
+  'client':"desktop",
+  'origin':"https:\/\/www.1formatik.com",
+  'ndd':"1formatik.com",
+  'debug': false,
+});
+</script>
+
+
+<script type="text/javascript" src="comment-donner-acces-a-une-autre-personne-a-un-depot-github__002/all.js" crossorigin="anonymous" async=""></script>
+
+<script async="" type="text/javascript" src="comment-donner-acces-a-une-autre-personne-a-un-depot-github__002/S8ZvnPK.js"></script>
+<img src="comment-donner-acces-a-une-autre-personne-a-un-depot-github__002/auto-user-sync.gif" width="1" border="0" height="1">
+
+<div style="position: fixed; top: 0px; left: 0px; overflow: hidden;"><input style="position: absolute; left: -300px;" id="focus_retriever" type="text"></div><img src="comment-donner-acces-a-une-autre-personne-a-un-depot-github__002/video_load.gif" style="display: none;"><img src="comment-donner-acces-a-une-autre-personne-a-un-depot-github__002/video_start.gif" style="display: none;"><img src="comment-donner-acces-a-une-autre-personne-a-un-depot-github__002/error.gif" style="display: none;"><iframe src="javascript:false" style="border: 0px none; width: 0%; height: 0%; position: relative; overflow: hidden;" scrolling="no"></iframe></body></html>
