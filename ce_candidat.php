@@ -23,7 +23,22 @@
       <button class="upd btn btn-info" onclick="var updateMatricule =prompt('Entrer le matricule du candidat à modifier ');">Modifier un candidat</button>
       <button class="del btn btn-danger" onclick="var deleteMatricule =prompt('Entrer le matricule du candidat à supprimer ');">Supprimer un candidat</button>
     </div>
+
+     <div class="listCandidat">
+      <table>
+        <tr class="text-white bg-primary">
+          <th>Matricule</th>
+          <th>Nom</th>
+          <th>Prenom</th>
+          <th>Date de naissance</th>
+          <th>Serie</th>
+          <th>Numero de transaction</th>
+          <th>Region</th>
+        </tr>
+      </table>
+    </div>
   </div>
+
 
 <!-- add candidate -->
 <div id="modal-wrapper-add" class="modal login_form">
