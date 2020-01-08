@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="css/ce.css">
   <title>Centre d'examen</title>
 </head>
-<body style=" background: url('images/correction.png');">
+<body style=" background-image: url('images/bg-personnel.jpg'); background-repeat: no-repeat; background-size: 100%;">
   <div class="candidate container" style="padding: 0;">
     <div class="btn btn-secondary btn-lg btn-block" style="margin: 0 0 20 0; width: 100%; font-size: 30px;">Gestionnaire du personnel examinatoire</div>
     <div class="candidate_manager row ">

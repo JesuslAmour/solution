@@ -1,21 +1,21 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
-<head>
+<head> -->
   <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!--   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
 
   <!-- awesone fonts css-->
-  <link href="css/font-awesome.css" rel="stylesheet" type="text/css">
+  <!-- <link href="css/font-awesome.css" rel="stylesheet" type="text/css"> -->
   <!-- owl carousel css-->
-  <link rel="stylesheet" href="owl-carousel/assets/owl.carousel.min.css" type="text/css">
+  <!-- <link rel="stylesheet" href="owl-carousel/assets/owl.carousel.min.css" type="text/css"> -->
   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
   <!-- custom CSS -->
-  <link rel="stylesheet" href="css/ce.css">
+  <!-- <link rel="stylesheet" href="css/ce.css">
   <title>Centre d'examen</title>
-</head>
-<body style=" background: url('images/icon_edit.png');">
+</head> -->
+<section style=" background: url('images/candida.jpg'); background-repeat: no-repeat; background-size: 100%;" class="body">
   <div class="candidate container" style="padding: 0;">
     <div class="btn btn-secondary btn-lg btn-block" style="margin: 0 0 20 0; width: 100%; font-size: 30px;">Gestionnaire de candidature</div>
     <div class="candidate_manager row ">
@@ -129,5 +129,6 @@
 <!-- owl carousel js-->
 <script src="owl-carousel/owl.carousel.min.js"></script>
 <script src="js/main.js"></script>
-</body>
-</html>
+</section>
+<!-- </body>
+</html> -->

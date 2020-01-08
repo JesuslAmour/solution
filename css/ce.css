@@ -1,21 +1,21 @@
 
-body{
+.body{
 
   padding: 25px 0px;
 }
-.candidate{
+.body .candidate{
   border-radius: 0 0 20px 20px;
   padding-bottom: 30px;
 }
-.candidate button{
+.body .candidate button{
   display: inline-block;
   font-weight: bold;
 }
-.candidate_manager button{
+.body .candidate_manager button{
   display: inline-block;
   font-weight: bold;
 }
-.candidate_manager{
+.body .candidate_manager{
   width: 100%;
   display: inline-flex;
   justify-content: space-between;
@@ -23,9 +23,9 @@ body{
 }
 
 /*register form*/
-.modal *{margin: 0; padding: 0; font-family: Helvetica, Arial, sans-serif;}
+.body .modal *{margin: 0; padding: 0; font-family: Helvetica, Arial, sans-serif;}
 
-input[type=text],input[type=number],input[type=hidden]{
+.body input[type=text],.body input[type=number],.body input[type=hidden]{
     width: 90%;
     padding: 12px 20px;
     display: inline-block;
@@ -38,7 +38,7 @@ input[type=text],input[type=number],input[type=hidden]{
     outline: none;
     background: transparent;
 }
-.login_form button{
+.body .login_form button{
     background-color: #4caf50;
     color: white;
     padding: 14px 20px;
@@ -48,20 +48,20 @@ input[type=text],input[type=number],input[type=hidden]{
     width: 90%;
     font-size: 20px;
 }
-button:hover{
+.body button:hover{
     opacity: 0.8;
 }
-.imgcontainer{
+.body .imgcontainer{
     text-align: center;
     margin: 24px 0 12px 0;
     position: relative;
 }
-.avatar{
+.body .avatar{
     width: 150px;
     height: 150px;
     border-radius: 50%;
 }
-.modal{
+.body .modal{
     display: none;
     position: fixed;
     z-index: 1;
@@ -72,14 +72,14 @@ button:hover{
     overflow: auto;
     background-color: rgba(0,0,0,0.4);
 }
-.modal-content{
+.body .modal-content{
     background-color: #fefefe;
     margin: 4% auto 15% auto;
     border: 1px solid #888;
     width: 40%;
     padding-bottom: 30px;
 }
-.close{
+.body .close{
     position: absolute;
     right: 25px;
     top: 0;
@@ -87,22 +87,22 @@ button:hover{
     font-size: 35px;
     font-weight: bold;
 }
-.close:hover, .close:focus{
+.body .close:hover, .body .close:focus{
     color: red;
     cursor: pointer;
 }
-.animate{
+.body .animate{
     animation: zoom 0.6s;
 }
 @keyframes zoom{
     from {transform: scale(0);}
     to {transform: scale(1);}
 }
-.box .inputbox,.datNais,.sexe{
+.body .box .inputbox,.body .datNais,.sexe{
     position: relative;
     margin-left: 10%;
 }
-.box .inputbox label{
+.body .box .inputbox label{
     position: absolute;
     top: 0%;
     left: 0%;
@@ -110,8 +110,8 @@ button:hover{
     pointer-events: none;
     transition: .5s;
 }
-.box .inputbox input:focus ~ label,
-.box .inputbox input:valid ~ label
+.body .box .inputbox input:focus ~ label,
+.body .box .inputbox input:valid ~ label
     {
     top: -18px;
     left: 0%;
@@ -120,13 +120,13 @@ button:hover{
 }
 /*end register form*/
 
-.candidate{
+.body .candidate{
   background-color: rgba(40,40,40,.4);
   padding: 10px;
 }
 
 /*liste*/
-table{
+.body table{
   border: solid 2px #333;
   width: 100%;
   margin-bottom: 20px;

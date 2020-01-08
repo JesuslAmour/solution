@@ -144,17 +144,15 @@
                         <div class="card text-center">
                             <div class="oval"><img class="card-img-top" src="images/seo.png" alt=""></div>
                             <div class="card-body">
-                                <h3 class="card-title">SEO</h3>
-                                <p class="card-text">Nullam quis libero in lorem accumsan sodales. Nam vel nisi
-                                    eget.</p>
+                                <h3 class="card-title">Police des examens</h3>
+                                <p class="card-text">Ce sont des regles à respecter pour le bon deroulement des examens.</p>
                             </div>
                         </div>
                         <div class="card text-center">
                             <div class="oval"><img class="card-img-top" src="images/graphics-design.png" alt=""></div>
                             <div class="card-body">
-                                <h3 class="card-title">Graphics Design</h3>
-                                <p class="card-text">Nullam quis libero in lorem accumsan sodales. Nam vel nisi
-                                    eget.</p>
+                                <h3 class="card-title">L'exelence des laureats du cameroun</h3>
+                                <p class="card-text">Les meilleurs laurats de cette session au cameroun fait la joie du mouvemnt eduatif de notre pays.</p>
                             </div>
                         </div>
                     </div>
@@ -196,16 +194,16 @@
             <div class="col-3">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">125</h5>
-                        <p class="card-text">Active Projects</p>
+                        <h5 class="card-title">6125</h5>
+                        <p class="card-text">Pris part</p>
                     </div>
                 </div>
             </div>
             <div class="col-3">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">200</h5>
-                        <p class="card-text">Business Growth</p>
+                        <h5 class="card-title">784</h5>
+                        <p class="card-text">Reussite</p>
                     </div>
                 </div>
             </div>
@@ -213,15 +211,15 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">530</h5>
-                        <p class="card-text">Completed Projects</p>
+                        <p class="card-text">Mention (note superieur à 12)</p>
                     </div>
                 </div>
             </div>
             <div class="col-3">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">941</h5>
-                        <p class="card-text">Happy Clients</p>
+                        <h5 class="card-title">41 %</h5>
+                        <p class="card-text">Pourcentage de reussite</p>
                     </div>
                 </div>
             </div>
@@ -233,6 +231,15 @@
         <h2>What our customers say about us.</h2>
         <div class="owl-carousel owl-carousel1 owl-theme">
             <div>
+                <div class="card text-center"><img class="card-img-top" src="images/JesuslAmour.jpg" alt="">
+                    <div class="card-body">
+                        <h5>Jordan Posseu<br/>
+                            <span> Web master & Designer</span></h5>
+                        <p class="card-text">“ Passionnée du web, il est une reférence dans le damaine et sur tous les plan. Jordan Posseu a été le designer du site <span>Solution</span> sur lequel vous etes entain de naviger. ” </p>
+                    </div>
+                </div>
+            </div>
+            <div>
                 <div class="card text-center"><img class="card-img-top" src="images/customer1.jpg" alt="">
                     <div class="card-body">
                         <h5>Lisa Gally <br/>
@@ -243,15 +250,6 @@
                 </div>
             </div>
             <div>
-                <div class="card text-center"><img class="card-img-top" src="images/JesuslAmour.jpg" alt="">
-                    <div class="card-body">
-                        <h5>Jordan Posseu<br/>
-                            <span> Web master & Designer</span></h5>
-                        <p class="card-text">“ Passionnée du web, il est une reférence dans le damaine et sur tous les plan. Jordan Posseu a été le designer du site <span>Solution</span> sur lequel vous etes entain de naviger. ” </p>
-                    </div>
-                </div>
-            </div>
-            <div>
                 <div class="card text-center"><img class="card-img-top" src="images/customer3.jpg" alt="">
                     <div class="card-body">
                         <h5>Aana Brown<br/>
@@ -271,77 +269,12 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
-<div class="container-fluid gtco-features-list">
-    <div class="container">
-        <div class="row">
-            <div class="media col-md-6 col-lg-4">
-                <div class="oval mr-4"><img class="align-self-start" src="images/quality-results.png" alt=""></div>
-                <div class="media-body">
-                    <h5 class="mb-0">Quality Results</h5>
-                    Aliquam a nisl pulvinar, hendrerit arcu sed, dapibus velit. Duis ac quam id sapien vestibulum
-                    fermentum ac eu eros. Aliquam erat volutpat.
-                </div>
-            </div>
-            <div class="media col-md-6 col-lg-4">
-                <div class="oval mr-4"><img class="align-self-start" src="images/analytics.png" alt=""></div>
-                <div class="media-body">
-                    <h5 class="mb-0">Analytics</h5>
-                    Aliquam a nisl pulvinar, hendrerit arcu sed, dapibus velit. Duis ac quam id sapien vestibulum
-                    fermentum ac eu eros. Aliquam erat volutpat.
-                </div>
-            </div>
-            <div class="media col-md-6 col-lg-4">
-                <div class="oval mr-4"><img class="align-self-start" src="images/affordable-pricing.png" alt=""></div>
-                <div class="media-body">
-                    <h5 class="mb-0">Affordable Pricing</h5>
-                    Aliquam a nisl pulvinar, hendrerit arcu sed, dapibus velit. Duis ac quam id sapien vestibulum
-                    fermentum ac eu eros. Aliquam erat volutpat.
-                </div>
-            </div>
-            <div class="media col-md-6 col-lg-4">
-                <div class="oval mr-4"><img class="align-self-start" src="images/easy-to-use.png" alt=""></div>
-                <div class="media-body">
-                    <h5 class="mb-0">Easy To Use</h5>
-                    Aliquam a nisl pulvinar, hendrerit arcu sed, dapibus velit. Duis ac quam id sapien vestibulum
-                    fermentum ac eu eros. Aliquam erat volutpat.
-                </div>
-            </div>
-            <div class="media col-md-6 col-lg-4">
-                <div class="oval mr-4"><img class="align-self-start" src="images/free-support.png" alt=""></div>
-                <div class="media-body">
-                    <h5 class="mb-0">Free Support</h5>
-                    Aliquam a nisl pulvinar, hendrerit arcu sed, dapibus velit. Duis ac quam id sapien vestibulum
-                    fermentum ac eu eros. Aliquam erat volutpat.
-                </div>
-            </div>
-            <div class="media col-md-6 col-lg-4">
-                <div class="oval mr-4"><img class="align-self-start" src="images/effectively-increase.png" alt=""></div>
-                <div class="media-body">
-                    <h5 class="mb-0">Effectively Increase</h5>
-                    Aliquam a nisl pulvinar, hendrerit arcu sed, dapibus velit. Duis ac quam id sapien vestibulum
-                    fermentum ac eu eros. Aliquam erat volutpat.
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="container-fluid gtco-logo-area">
-    <div class="container">
-        <div class="row">
-            <div class="col"><img src="images/logo1.png" class="img-fluid" alt=""></div>
-            <div class="col"><img src="images/logo2.png" class="img-fluid" alt=""></div>
-            <div class="col"><img src="images/logo3.png" class="img-fluid" alt=""></div>
-            <div class="col"><img src="images/logo4.png" class="img-fluid" alt=""></div>
-            <div class="col"><img src="images/logo5.png" class="img-fluid" alt=""></div>
         </div>
     </div>
 </div>
 <div class="container-fluid gtco-news" id="news">
     <div class="container">
-        <h2>Latest News & Articles</h2>
+        <h2>Dernières News & Articles</h2>
         <div class="owl-carousel owl-carousel2 owl-theme">
             <div>
                 <div class="card text-center"><img class="card-img-top" src="images/news1.jpg" alt="">
@@ -368,8 +301,7 @@
             <div>
                 <div class="card text-center"><img class="card-img-top" src="images/news3.jpg" alt="">
                     <div class="card-body text-left pr-0 pl-0">
-                        <h5>Morbi faucibus odio sollicitudin
-                            risus scelerisque dignissim. </h5>
+                        <h5>Introduction de l'informatique comme une épreuve non facultative. </h5>
                         <p class="card-text">Donec non sem mi. In hac habitasse platea dictumst. Nullam a feugiat augue,
                             et porta metus. Nulla mollis lobortis leet. Maecenas tincidunt, arcu sed ornare purus risus
                             . . . </p>

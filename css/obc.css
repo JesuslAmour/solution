@@ -1,0 +1,33 @@
+.navbar-brand {
+  font-size: 36px;
+  font-family: "Lato-Black";
+  text-transform: uppercase;
+  background: -webkit-linear-gradient(left, #1d3ede, #01e6f8);
+  background: -ms-linear-gradient(left, #1d3ede, #01e6f8);
+  background: -moz-linear-gradient(left, #1d3ede, #01e6f8);
+  background: -o-linear-gradient(left, #1d3ede, #01e6f8);
+  -webkit-background-clip: text;
+  -ms-background-clip: text;
+  -o-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -ms-text-fill-color: transparent;
+  -o-text-fill-color: transparent;
+}
+.body-dashbord{
+  display: flex;
+  font-size: 20px;
+  margin-top: 60px;
+  font-weight: bold;
+}
+.vertical-nav{
+  width: 100%;
+  background-color: rgba(255,255,255,.75);
+}
+.vertical-nav a:hover{
+  background-color: rgba(0,0,0,1);
+  margin-left: 2%
+}
+#v-pills-tabContent{
+    width: 100%;
+    margin: 2%;
+}
