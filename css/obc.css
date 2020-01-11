@@ -31,3 +31,24 @@
     width: 100%;
     margin: 2%;
 }
+/******************************************** Epreuves *****************************************************/
+.epreuve div:nth-child(2) img{
+    width: 350px;
+    height: 260px;
+    display: inline-block;
+}
+.epreuve div:nth-child(2){
+    display: flex;
+    justify-content: space-between;
+}
+.epreuve div:nth-child(2) p{
+    text-align: center;
+    color: #fff;
+}
+.epreuve div:nth-child(2) img:hover{
+    width: 340px;
+    height: 255px;
+    display: inline-block;
+    cursor: pointer;
+    background-color: rgba(0,0,0,.5);
+}

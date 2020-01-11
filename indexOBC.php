@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <!-- custom CSS -->
   <link rel="stylesheet" href="css/obc.css">
+  <link rel="stylesheet" href="css/ce.css">
   <title>OBC-index</title>
 </head>
 <body style=" background-image: url('images/bg-personnel.jpg'); background-repeat: no-repeat; background-size: 100%;">
@@ -59,33 +60,23 @@
     <div class="body-dashbord">
       <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical" class="vertical-nav">
         <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Home</a>
-        <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Nouvel examen</a>
+        <a class="nav-link" id="v-pills-newExam-tab" data-toggle="pill" href="#v-pills-newExam" role="tab" aria-controls="v-pills-newExam" aria-selected="false">Nouvel examen</a>
               <div class="dropdown-divider"></div>
         <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-add" aria-selected="false">Ajouter une actualié</a>
         <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-bibliothèque" aria-selected="false">Bibliothèques</a>
               <div class="dropdown-divider"></div>
         <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-answer" aria-selected="false">Resultats de l'examen</a>
         <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-police" aria-selected="false">Police de l'examen</a>
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Gestionnaire d'epreuves
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Ajouter une épreuve</a>
-              <a class="dropdown-item" href="#">Editer une épreuve</a>
-              <a class="dropdown-item" href="#">Supprimer une épreuve</a>
+        <a class="nav-link" id="v-pills-epreuves-tab" data-toggle="pill" href="#v-pills-epreuves" role="tab" aria-controls="v-pills-police" aria-selected="false">Epreuves</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Presentation des épreuves</a>
-            </div>
-          </li>
-              <div class="dropdown-divider"></div>
-        <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-pv" role="tab" aria-controls="v-pills-pv" aria-selected="false">Procces verbaux</a>
+        <a class="nav-link" id="v-pills-epreuves-tab" data-toggle="pill" href="#v-pills-pv" role="tab" aria-controls="v-pills-pv" aria-selected="false">Procces verbaux</a>
       </div>
       <div class="tab-content" id="v-pills-tabContent">
-        <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">...</div>
-        <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">...</div>
-        <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">...</div>
-        <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">...</div>
+        <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab"><?php include('obc_home.php') ?></div>
+        <div class="tab-pane fade" id="v-pills-newExam" role="tabpanel" aria-labelledby="v-pills-newExam-tab"></h1><br><br><br><br><section style="text-align: center; color: #fff;">Cette platforme vous permet de realiser et d'organiser les examens au cameroun en sessions. Vous pouvez donc <a href="">créer & definir une nouvelle session</a>ici en renseignant les informations relatives à la nouvelle session.</section></div>
+        <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab"><?php include('addNews.php') ?></div>
+        <div class="tab-pane fade" id="v-pills-police" role="tabpanel" aria-labelledby="v-pills-police-tab">...</div>
+        <div class="tab-pane fade" id="v-pills-epreuves" role="tabpanel" aria-labelledby="v-pills-epreuves-tab"><?php include('epreuve.php') ?></div>
       </div>
     </div>
   </div>
